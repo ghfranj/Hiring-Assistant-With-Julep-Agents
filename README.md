@@ -1,6 +1,6 @@
 # Recruitment Assistant (Julep Multi-Agent Demo)
 
-Main_code.py demonstrates how to build a **multi-agent recruitment assistant** using the [Julep Python SDK](https://docs.julep.ai).
+main_code.py demonstrates how to build a **multi-agent recruitment assistant** using the [Julep Python SDK](https://docs.julep.ai).
 The workflow extracts evidence from resumes, scores and ranks candidates, and generates tailored interview questions.
 
 ## Features
