@@ -207,42 +207,6 @@ def dedupe_questions_locally(questions_json):
         cleaned.append({"name": name, "questions": uniq[:5]})
     return {"top_n_questions": cleaned}
 
-# Register the tools on the Orchestrator agent for reuse (optional),
-# BUT we will also bind them inside the task to avoid visibility issues.
-client.agents.tools.create(
-    agent_id=orchestrator.id,
-    name="compute_scores",
-    type="function",
-    function={
-        "description": "Compute scores and ranking using criteria and extracted evidence.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "criteria": {"type": "object"},
-                "evidence": {"type": "object"},
-                "n": {"type": "integer", "minimum": 1}
-            },
-            "required": ["criteria", "evidence", "n"],
-        },
-    },
-)
-client.agents.tools.create(
-    agent_id=orchestrator.id,
-    name="dedupe_questions",
-    type="function",
-    function={
-        "description": "Deduplicate and trim interview questions per candidate to 5.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "questions": {"type": "object"}  # expects { top_n_questions: [ {name, questions[]} ... ] }
-            },
-            "required": ["questions"],
-        },
-    },
-)
-print("Tools registered on Orchestrator: compute_scores, dedupe_questions")
-
 # ===================================
 # 2) TASK A — EXTRACT EVIDENCE (LLM)
 # ===================================
@@ -549,4 +513,5 @@ else:
     # Case C: output is a dict without result_json (rare), print it
     else:
         print("Raw output object:", out_b)
+
 
